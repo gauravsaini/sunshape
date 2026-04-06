@@ -168,7 +168,6 @@ def cmd_fit(args: argparse.Namespace) -> int:
         torch_dtype=args.torch_dtype,
         trust_remote_code=args.trust_remote_code,
         local_files_only=args.local_files_only,
-        warmup_runs=int(args.warmup_runs),
     )
     print(json.dumps({
         "model": args.model,
@@ -281,6 +280,7 @@ def cmd_eval(args: argparse.Namespace) -> int:
         torch_dtype=args.torch_dtype,
         trust_remote_code=args.trust_remote_code,
         local_files_only=args.local_files_only,
+        warmup_runs=int(args.warmup_runs),
     )
     print(df.to_string(index=False))
     save_eval_outputs(df, output_csv=args.output_csv, output_json=args.output_json)
