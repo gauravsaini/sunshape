@@ -34,20 +34,20 @@ This repo is source-only package code. Install runtime dependencies in your envi
 pip install torch transformers datasets pandas numpy
 ```
 
-Then make the package importable from the parent directory of this checkout:
+Use the `sunshape` command directly through `uv`:
 
 ```bash
 cd ..
-python -m sunshape.cli --help
+uv run sunshape --help
 ```
 
-If your directory name is not `sunshape`, set `PYTHONPATH` so the package can be resolved.
+Or install in editable mode and run `sunshape` without `uv`.
 
 ## Quickstart
 
 ### Model Input (Repo ID or URL)
 
-All CLI commands that take `--model` now accept either format:
+All CLI commands that take `--model` accept either format:
 
 - `Qwen/Qwen3-0.6B`
 - `https://huggingface.co/Qwen/Qwen3-0.6B`
@@ -57,7 +57,7 @@ All CLI commands that take `--model` now accept either format:
 
 ```bash
 cd ..
-python -m sunshape.cli diagnose \
+uv run sunshape diagnose \
   --model Qwen/Qwen3-0.6B \
   --block-dim 8
 ```
@@ -66,7 +66,7 @@ python -m sunshape.cli diagnose \
 
 ```bash
 cd ..
-python -m sunshape.cli fit \
+uv run sunshape fit \
   --model Qwen/Qwen3-0.6B \
   --bundle-path ./artifacts/qwen3_06b.sunshape.pt \
   --mode sunshape_base \
@@ -78,7 +78,7 @@ python -m sunshape.cli fit \
 
 ```bash
 cd ..
-python -m sunshape.cli eval \
+uv run sunshape eval \
   --model Qwen/Qwen3-0.6B \
   --traces-path ./traces_by_layer_qwen3_06b_multilayer.pt \
   --layers 3 7 11 15 \
@@ -92,7 +92,7 @@ python -m sunshape.cli eval \
 
 ```bash
 cd ..
-python -m sunshape.cli stats \
+uv run sunshape stats \
   --traces-path ./traces_by_layer_qwen3_06b_multilayer.pt \
   --bits-per-dim 1.0 2.0 3.0 4.0 \
   --contexts 2048 4096
