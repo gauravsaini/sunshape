@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Python caches/bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments and tooling caches
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Packaging/build outputs
+*.egg-info/
+build/
+dist/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local experiment artifacts
+local_runs/
+local_runs_mac_new/
+runs/
+colab/
