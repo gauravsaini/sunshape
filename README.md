@@ -69,7 +69,7 @@ cd ..
 uv run sunshape fit \
   --model Qwen/Qwen3-0.6B \
   --bundle-path ./artifacts/qwen3_06b.sunshape.pt \
-  --mode sunshape_base \
+  --mode sunshape_baseline \
   --bits-per-dim 3.0 \
   --layers 3 7 11 15
 ```
@@ -82,7 +82,7 @@ uv run sunshape eval \
   --model Qwen/Qwen3-0.6B \
   --traces-path ./traces_by_layer_qwen3_06b_multilayer.pt \
   --layers 3 7 11 15 \
-  --modes sunshape_base turboquant_mse turboquant_prod \
+  --modes sunshape_baseline turboquant_mse turboquant_prod \
   --bits-per-dim 3.0 \
   --ctx-len 256 \
   --max-eval-texts 32
@@ -101,5 +101,6 @@ uv run sunshape stats \
 ## Notes
 
 - HF model URLs are normalized automatically (including `hf.co` short links and `/tree/...` URLs).
+- `sunshape_baseline` is the canonical baseline label (`sunshape_base` and `profileperm_baseline` remain valid aliases).
 - `--local-files-only` is supported in model-loading paths for offline workflows.
 - For multimodal checkpoints used in text-only eval, SunShape falls back to compatible HF auto-model loaders when needed.

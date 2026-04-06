@@ -145,8 +145,8 @@ class SunShapeBlockCodec(torch.nn.Module):
     Mainline block codec aligned with the current SunShape paper direction.
 
     Recommended modes:
-    - ``profileperm_baseline``: fixed offline ProfilePerm(SigmaQ) + plain block VQ
-    - ``profileperm_localmetric_dsq``: ProfilePerm(SigmaQ) + local metric + DSQ
+    - ``sunshape_baseline`` (aka ``profileperm_baseline``): fixed offline ProfilePerm(SigmaQ) + plain block VQ
+    - ``sunshape_pro`` (aka ``profileperm_localmetric_dsq``): ProfilePerm(SigmaQ) + local metric + DSQ
 
     Legacy ablation modes are kept for reproducibility:
     - ``legacy_strict``: TL-SMAQ-style full metric shaping
@@ -160,7 +160,7 @@ class SunShapeBlockCodec(torch.nn.Module):
         n_centroids: int = 256,
         c: float = 5.0,
         n_refine_dsq: int = 3,
-        mode: str = "profileperm_baseline",
+        mode: str = "sunshape_baseline",
         use_rotation: bool = False,
         rotation_seed: int = 0,
         device: torch.device | None = None,
@@ -173,7 +173,22 @@ class SunShapeBlockCodec(torch.nn.Module):
         self.n_blocks = head_dim // block_dim
         self.n_centroids = n_centroids
         self.c = c
-        self.mode = "rotated" if use_rotation else mode
+        mode_aliases = {
+            "sunshape_baseline": "profileperm_baseline",
+            "sunshape_base": "profileperm_baseline",
+            "profileperm_baseline": "profileperm_baseline",
+            "profileperm_sigmaq": "profileperm_baseline",
+            "sunshape_pro": "profileperm_localmetric_dsq",
+            "profileperm_localmetric_dsq": "profileperm_localmetric_dsq",
+            "profileperm_sigmaq_localmetric_dsq": "profileperm_localmetric_dsq",
+            "baseline": "identity_baseline",
+            "identity_baseline": "identity_baseline",
+            "legacy_strict": "legacy_strict",
+            "rotated": "rotated",
+        }
+        if mode not in mode_aliases:
+            raise ValueError(f"Unknown SunShapeBlockCodec mode: {mode}")
+        self.mode = "rotated" if use_rotation else mode_aliases[mode]
         self.n_refine_dsq = 3 if n_refine_dsq is None else int(n_refine_dsq)
         self.use_rotation = self.mode == "rotated"
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")

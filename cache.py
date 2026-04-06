@@ -137,7 +137,7 @@ class SunShapeCache(DynamicCache):
         *,
         block_dim: int = 8,
         bits_per_dim: float = 1.0,
-        mode: str = "profileperm_baseline",
+        mode: str = "sunshape_baseline",
         n_refine_dsq: int = 3,
         cal_points: int = 4096,
         seed: int = 42,

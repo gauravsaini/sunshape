@@ -195,6 +195,7 @@ def _load_texts(calibration_texts: Iterable[str] | None, *, dataset_name: str, d
 
 def resolve_mode_alias(mode: str) -> str:
     aliases = {
+        "sunshape_baseline": "profileperm_baseline",
         "sunshape_base": "profileperm_baseline",
         "profileperm_baseline": "profileperm_baseline",
         "profileperm_sigmaq": "profileperm_baseline",
@@ -210,6 +211,15 @@ def resolve_mode_alias(mode: str) -> str:
     return aliases[mode]
 
 
+def resolve_mode_label(mode: str) -> str:
+    internal = resolve_mode_alias(mode)
+    labels = {
+        "profileperm_baseline": "sunshape_baseline",
+        "profileperm_localmetric_dsq": "sunshape_pro",
+    }
+    return labels.get(internal, internal)
+
+
 def default_block_dim(bits_per_dim: float) -> int:
     return 8 if bits_per_dim <= 1.0 else 2
 
@@ -219,7 +229,7 @@ class SunShapeConfig:
     layers: list[int] | None = None
     bits_per_dim: float = 4.0
     block_dim: int | None = None
-    mode: str = "sunshape_base"
+    mode: str = "sunshape_baseline"
     cal_points: int = 4096
     dsq_steps: int = 3
     kmeans_iters: int = 15

@@ -14,6 +14,7 @@ from sunshape.hf import (
     load_trace_artifact,
     prepare_sunshape_model,
     resolve_mode_alias,
+    resolve_mode_label,
     save_trace_artifact,
 )
 from sunshape.integration.vllm import SunShapeVLLMConfig, SunShapeVLLMHandle, export_bundle_for_vllm, prepare_vllm_bundle

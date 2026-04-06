@@ -10,7 +10,7 @@ import torch
 from datasets import load_dataset
 
 from sunshape.cache import SunShapeCache
-from sunshape.hf import load_model_and_tokenizer, load_trace_artifact, resolve_mode_alias
+from sunshape.hf import load_model_and_tokenizer, load_trace_artifact, resolve_mode_alias, resolve_mode_label
 from sunshape.turbo_cache import TurboQuantCache
 
 
@@ -234,9 +234,10 @@ def run_cache_eval_loaded(
                 seed=seed,
                 device=device,
             )
-            resolved_mode = mode
+            method_label = mode
         else:
             resolved_mode = resolve_mode_alias(mode)
+            method_label = resolve_mode_label(mode)
             cache_template = SunShapeCache.from_traces(
                 traces,
                 layers=layers,
@@ -268,7 +269,7 @@ def run_cache_eval_loaded(
             cache_factory=cache_factory,
         )
         rows.append({
-            "method": resolved_mode,
+            "method": method_label,
             "layers": ",".join(map(str, layers)),
             "seed": seed,
             "bits_per_dim": bits_per_dim,

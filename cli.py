@@ -20,11 +20,23 @@ from sunshape import (
     load_trace_artifact,
     load_trace_meta,
     prepare_vllm_bundle,
+    resolve_mode_label,
 )
 
 
 def _add_common_sunshape_args(parser: argparse.ArgumentParser, *, include_layers: bool = True) -> None:
-    parser.add_argument("--mode", default="sunshape_base", choices=["sunshape_base", "sunshape_pro"])
+    parser.add_argument(
+        "--mode",
+        default="sunshape_baseline",
+        choices=[
+            "sunshape_baseline",
+            "sunshape_base",
+            "profileperm_baseline",
+            "sunshape_pro",
+            "profileperm_localmetric_dsq",
+        ],
+        help="SunShape mode (`sunshape_baseline` is canonical; `sunshape_base` and `profileperm_baseline` are aliases).",
+    )
     parser.add_argument("--bits-per-dim", type=float, default=4.0)
     parser.add_argument("--block-dim", type=int, default=0, help="Defaults to 8 at 1-bit and 2 otherwise.")
     if include_layers:
@@ -105,7 +117,7 @@ def build_parser() -> argparse.ArgumentParser:
     eval_parser.add_argument("--model", required=True)
     eval_parser.add_argument("--traces-path", required=True)
     eval_parser.add_argument("--layers", nargs="+", type=int, default=[3])
-    eval_parser.add_argument("--modes", nargs="+", default=["sunshape_base", "sunshape_pro"])
+    eval_parser.add_argument("--modes", nargs="+", default=["sunshape_baseline", "sunshape_pro"])
     eval_parser.add_argument("--eval-domain", default="wikitext")
     eval_parser.add_argument("--max-eval-texts", type=int, default=16)
     eval_parser.add_argument("--ctx-len", type=int, default=512)
@@ -173,7 +185,8 @@ def cmd_fit(args: argparse.Namespace) -> int:
         "model": args.model,
         "bundle_path": str(Path(args.bundle_path)),
         "layers": bundle.layers,
-        "mode": bundle.mode,
+        "mode": resolve_mode_label(bundle.mode),
+        "mode_internal": bundle.mode,
         "bits_per_dim": bundle.bits_per_dim,
         "block_dim": bundle.block_dim,
         "trace_meta": bundle.trace_meta,
@@ -296,7 +309,8 @@ def cmd_bundle_info(args: argparse.Namespace) -> int:
     payload = {
         "model_name": bundle.model_name,
         "layers": list(bundle.layers),
-        "mode": bundle.mode,
+        "mode": resolve_mode_label(bundle.mode),
+        "mode_internal": bundle.mode,
         "bits_per_dim": bundle.bits_per_dim,
         "block_dim": bundle.block_dim,
         "cal_points": bundle.cal_points,
