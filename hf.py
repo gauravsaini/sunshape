@@ -41,6 +41,32 @@ def _set_seed(seed: int) -> None:
         torch.cuda.manual_seed_all(seed)
 
 
+def normalize_hf_model_ref(model_ref: str) -> str:
+    ref = str(model_ref).strip()
+    if not ref:
+        raise ValueError("model_ref must be a non-empty string")
+
+    is_hf_url = False
+    for prefix in (
+        "https://huggingface.co/",
+        "http://huggingface.co/",
+        "https://hf.co/",
+        "http://hf.co/",
+        "hf.co/",
+    ):
+        if ref.startswith(prefix):
+            ref = ref[len(prefix):]
+            is_hf_url = True
+            break
+
+    ref = ref.split("?", 1)[0].split("#", 1)[0].rstrip("/")
+    if is_hf_url:
+        for marker in ("/tree/", "/blob/"):
+            if marker in ref:
+                ref = ref.split(marker, 1)[0]
+    return ref
+
+
 def _hf_pretrained_kwargs(*, trust_remote_code: bool = False, local_files_only: bool = False) -> dict:
     kwargs = {"trust_remote_code": trust_remote_code}
     if local_files_only:
@@ -390,6 +416,7 @@ def load_model_and_tokenizer(
     trust_remote_code: bool = False,
     local_files_only: bool = False,
 ):
+    model_name = normalize_hf_model_ref(model_name)
     device = _choose_device()
     dtype = _resolve_dtype(torch_dtype, device)
     load_kwargs = {

@@ -14,6 +14,7 @@ This repository contains the core `sunshape` Python package (the `sunshape/` sub
 - Cache-native quantization path (`SunShapeCache`) that avoids custom attention rewrites
 - Bundle workflow (`SunShapeBundle`) for reproducible fit/export/load
 - CLI for fit/eval/stats/diagnose/serve
+- `--model` accepts either a Hugging Face repo ID or a full HF URL
 - Support for modern HF model families, including recent Ministral/Mistral-3 style configs
 
 ## Repository Layout
@@ -43,6 +44,14 @@ python -m sunshape.cli --help
 If your directory name is not `sunshape`, set `PYTHONPATH` so the package can be resolved.
 
 ## Quickstart
+
+### Model Input (Repo ID or URL)
+
+All CLI commands that take `--model` now accept either format:
+
+- `Qwen/Qwen3-0.6B`
+- `https://huggingface.co/Qwen/Qwen3-0.6B`
+- `https://huggingface.co/mistralai/Ministral-3-8B-Base-2512`
 
 ### 1) Diagnose a model
 
@@ -91,6 +100,6 @@ python -m sunshape.cli stats \
 
 ## Notes
 
+- HF model URLs are normalized automatically (including `hf.co` short links and `/tree/...` URLs).
 - `--local-files-only` is supported in model-loading paths for offline workflows.
 - For multimodal checkpoints used in text-only eval, SunShape falls back to compatible HF auto-model loaders when needed.
-
