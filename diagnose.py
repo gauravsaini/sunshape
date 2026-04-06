@@ -611,6 +611,9 @@ def diagnose_model(
     >>> print(report)
     """
     from transformers import AutoModelForCausalLM, AutoTokenizer
+    from sunshape.hf import normalize_hf_model_ref
+
+    model_name = normalize_hf_model_ref(model_name)
 
     # ── Load model ──────────────────────────────────────────────────────
     device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")

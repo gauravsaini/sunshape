@@ -113,6 +113,12 @@ def build_parser() -> argparse.ArgumentParser:
     eval_parser.add_argument("--torch-dtype", default="float16", choices=["float16", "float32", "bfloat16"])
     eval_parser.add_argument("--trust-remote-code", action="store_true")
     eval_parser.add_argument("--local-files-only", action="store_true")
+    eval_parser.add_argument(
+        "--warmup-runs",
+        type=int,
+        default=-1,
+        help="Throwaway native passes before scoring (default: 1 on MPS, 0 otherwise).",
+    )
     eval_parser.add_argument("--output-csv", default="")
     eval_parser.add_argument("--output-json", default="")
     _add_common_sunshape_args(eval_parser, include_layers=False)
@@ -162,6 +168,7 @@ def cmd_fit(args: argparse.Namespace) -> int:
         torch_dtype=args.torch_dtype,
         trust_remote_code=args.trust_remote_code,
         local_files_only=args.local_files_only,
+        warmup_runs=int(args.warmup_runs),
     )
     print(json.dumps({
         "model": args.model,
@@ -188,7 +195,7 @@ def cmd_diagnose(args: argparse.Namespace) -> int:
             max_queries=args.max_queries,
         )
     else:
-        report = diagnose_model(args.model, block_dim=args.block_dim, max_queries=args.max_queries)
+        report = diagnose_model(args.model, block_dim=args.block_dim)
     print(report)
     if args.output_json:
         output_path = Path(args.output_json)

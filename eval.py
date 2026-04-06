@@ -111,6 +111,7 @@ def run_cache_eval(
     torch_dtype: str,
     trust_remote_code: bool = False,
     local_files_only: bool = False,
+    warmup_runs: int = -1,
 ) -> pd.DataFrame:
     set_seed(seed)
     device = choose_device()
@@ -140,6 +141,7 @@ def run_cache_eval(
         dsq_steps=dsq_steps,
         cal_points=cal_points,
         device=device,
+        warmup_runs=warmup_runs,
     )
 
 
@@ -160,12 +162,19 @@ def run_cache_eval_loaded(
     dsq_steps: int,
     cal_points: int,
     device: torch.device | None = None,
+    warmup_runs: int = -1,
 ) -> pd.DataFrame:
     if device is None:
         device = choose_device()
+    warmup = int(warmup_runs)
+    if warmup < 0:
+        warmup = 1 if device.type == "mps" else 0
     num_layers = get_num_layers(model)
     cache_config = get_cache_config(model)
     rows: list[dict[str, object]] = []
+
+    for _ in range(warmup):
+        _ = compute_ppl_with_cache(model, tokenizer, texts, ctx_len, cache_factory=lambda: None)
 
     nll, ppl = compute_ppl_with_cache(model, tokenizer, texts, ctx_len, cache_factory=lambda: None)
     rows.append({
