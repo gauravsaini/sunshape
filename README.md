@@ -1,4 +1,6 @@
-# SunShape
+# SunShape: Fixed-Block KV-Cache Compression at Extreme Bitrates
+
+Paper : https://doi.org/10.5281/zenodo.19470100
 
 SunShape studies KV-cache compression under a fixed block codec. The current
 paper-facing story is:
