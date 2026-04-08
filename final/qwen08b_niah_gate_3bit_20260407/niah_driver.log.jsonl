@@ -1,0 +1,27 @@
+{"ts": "2026-04-07T13:23:47.005326+00:00", "event": "driver_start", "model_name": "Qwen/Qwen3.5-0.8B", "traces_path": "/Users/admin/Desktop/0204/sunshape/local_runs/traces/traces_by_layer_qwen08b.pt", "device": "mps", "bits_per_dim_list": [3.0], "cal_points_list": [4096], "seeds": [42, 123, 777], "methods": ["baseline_fp", "baseline_blockvq", "profileperm_sigmaq", "profileperm_sigmaq_localmetric_dsq"], "layers": [3, 7, 11, 15, 19, 23], "output_root": "/Users/admin/Desktop/0204/sunshape/final/qwen08b_niah_gate_3bit_20260407", "early_stop_on_saturation": false, "saturation_threshold": 1.0, "saturation_min_buckets": 3}
+{"ts": "2026-04-07T13:23:48.607831+00:00", "event": "job_start", "bits_per_dim": 3.0, "block_dim": 2, "cal_points": 4096, "seed": 42, "output_dir": "/Users/admin/Desktop/0204/sunshape/final/qwen08b_niah_gate_3bit_20260407/bits_3_0/cal_4096/seed_42"}
+{"ts": "2026-04-07T13:23:48.613740+00:00", "event": "fit_method_start", "method": "baseline_blockvq", "cal_points": 4096, "bits_per_dim": 3.0, "seed": 42}
+{"ts": "2026-04-07T13:23:48.619177+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 3, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:24:01.442668+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 7, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:24:13.991243+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 11, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:24:24.246748+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 15, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:24:37.016996+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 19, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:24:49.574558+00:00", "event": "fit_layer", "method": "baseline_blockvq", "layer": 23, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:00.147949+00:00", "event": "fit_method_done", "method": "baseline_blockvq"}
+{"ts": "2026-04-07T13:25:00.148347+00:00", "event": "fit_method_start", "method": "profileperm_sigmaq", "cal_points": 4096, "bits_per_dim": 3.0, "seed": 42}
+{"ts": "2026-04-07T13:25:00.156834+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 3, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:10.207226+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 7, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:16.984164+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 11, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:25.563832+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 15, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:35.706881+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 19, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:46.941455+00:00", "event": "fit_layer", "method": "profileperm_sigmaq", "layer": 23, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:25:57.815036+00:00", "event": "fit_method_done", "method": "profileperm_sigmaq"}
+{"ts": "2026-04-07T13:25:57.815258+00:00", "event": "fit_method_start", "method": "profileperm_sigmaq_localmetric_dsq", "cal_points": 4096, "bits_per_dim": 3.0, "seed": 42}
+{"ts": "2026-04-07T13:25:57.822732+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 3, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:26:36.378927+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 7, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:27:13.028482+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 11, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:27:48.570533+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 15, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:28:25.918920+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 19, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:29:04.385301+00:00", "event": "fit_layer", "method": "profileperm_sigmaq_localmetric_dsq", "layer": 23, "q_shape": [4096, 256], "k_shape": [2370, 256]}
+{"ts": "2026-04-07T13:29:46.779173+00:00", "event": "fit_method_done", "method": "profileperm_sigmaq_localmetric_dsq"}
+{"ts": "2026-04-07T13:29:46.779379+00:00", "event": "bucket_start", "context_tokens": 4096, "document_depth_percent": 90.0, "task_kind": "grounded_qa", "bits_per_dim": 3.0, "cal_points": 4096, "seed": 42}
